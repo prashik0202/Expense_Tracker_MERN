@@ -61,8 +61,43 @@ exports.registerUser = async (req,res,next) => {
  * @route   POST : /api/user/login
  * @access  Public
  */
-exports.loginUser = (req,res,next) => {
-    res.send('User LoggedIn!');
+exports.loginUser = async (req,res,next) => {
+    try {
+        const { email , password } = req.body;
+        if( !email || !password) {
+            return res.status(400).json({
+                success : false,
+                message : "Please enter all fields"
+            })
+        }
+
+        const user = await User.findOne({email});
+
+        if(user){
+            if(!await bcrypt.compare(password,user.password)){
+                return res.status(500).json({
+                    success : "false",
+                    message : "Enter Correct Password"
+                })
+            }
+            return res.status(200).json({
+                _id : user.id,
+                name : user.name,
+                email : user.email,
+                token : generateToken(user.id)
+            })
+        } else {
+            return res.status(500).json({
+                success : false,
+                messgae : "Email not Found!"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            success : false,
+            message : "Interal Server Error"
+        })
+    }
 }
 
 /**
@@ -71,5 +106,6 @@ exports.loginUser = (req,res,next) => {
  * @access  Public
  */
 exports.getUser = (req,res,next) => {
-    res.send('We got user!');
+    res.status(200).json(req.user);
+    // res.send('We got user!');
 }

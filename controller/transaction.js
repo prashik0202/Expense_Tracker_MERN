@@ -1,4 +1,5 @@
 const Transaction = require('../models/Transaction');
+const User = require('../models/User');
 
 /**
  * @desc get all transaction 
@@ -7,7 +8,7 @@ const Transaction = require('../models/Transaction');
 */
 exports.getTransactions = async(req,res,next) => {
     try {
-        const transactions = await Transaction.find();
+        const transactions = await Transaction.find({ user : req.user.id});
 
         return res.status(200).json({
             success: true,
@@ -32,7 +33,11 @@ exports.addTransaction = async (req,res,next) => {
     try {
         const { text , amount } = req.body;
 
-        const transaction = await Transaction.create(req.body);
+        const transaction = await Transaction.create({
+            text : req.body.text,
+            amount : req.body.amount,
+            user : req.user.id
+        });
 
         return res.status(201).json({
             success : true,
@@ -64,19 +69,30 @@ exports.addTransaction = async (req,res,next) => {
 exports.deleteTransaction = async(req,res,next) => {
     try {
         const transaction = await Transaction.findById(req.params.id);
-
+        if(!req.user){
+            return res.status(401).json({
+                success : false,
+                error : "User Not Found"
+            })
+        }
+        if(transaction.user.toString() !== req.user.id ) {
+            return res.status(401).json({
+                success : false,
+                error : "Not authorized user"
+            })
+        }
         if(!transaction) {
             return res.status(404).json({
                 success : false,
                 error : "No Transaction Found"
             })
-        } else {
-            await transaction.deleteOne({ id : req.params.id});
-            return res.status(200).json({
-                success : true,
-                data : {}
-            })
-        }
+        }  
+        await transaction.deleteOne({ id : req.params.id});
+        return res.status(200).json({
+            success : true,
+            data : {}
+        })
+        
     } catch (error) {
         return res.status(500).json({
             success : false,
