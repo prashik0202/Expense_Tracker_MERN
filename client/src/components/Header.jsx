@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
+import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 // const navItems = ['Login' , 'Register'];
 
@@ -35,13 +37,13 @@ function Header(props) {
       <List>
         
         <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton sx={{ textAlign: 'center' }} component={Link} to='/login' >
                 <ListItemText primary='Login' />
             </ListItemButton>
         </ListItem>
 
         <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton sx={{ textAlign: 'center' }} component={Link} to='/register' >
                 <ListItemText primary='Register' />
             </ListItemButton>
         </ListItem>
@@ -52,38 +54,64 @@ function Header(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  const user = false;
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar component="nav" elevation={0} color='transparent'>
         <Toolbar>
             <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
             >
                 <MenuIcon />
             </IconButton>
             <Typography
                 variant="h6"
-                component="div"
-                sx={{ flexGrow: 1, display: {  sm: 'block' } , fontWeight : 'bold' }}
+                component={Link}
+                to='/'
+                sx={{ flexGrow: 1, display: {  sm: 'block' } , fontWeight : 'bold', textDecoration : 'none', color : 'black' }}
             >
-                MoneyTrack
+              MoneyTrack
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                
-                <Button color='primary' sx={{ fontWeight : 'bold' , borderRadius : 0}} elevation={0}>
-                    Login
+               { user ? (
+                <Box display='flex' flexDirection='row'  >
+                  <Typography variant='body1' sx={{ p : 1 , fontWeight : 'bold'}}>Welcome, Prashik</Typography>
+                  <Button variant='contained' color='error' size='small' 
+                    sx={{ ml : 1 , borderRadius : 0 }}>Logout</Button>
+                </Box>
+               ):(
+                  <>
+                  <Button 
+                  color='primary' 
+                  sx={{ fontWeight : 'bold' , borderRadius : 0}} 
+                  elevation={0} 
+                  component={Link} 
+                  to='/login'
+                >
+                  Login
                 </Button>
                 
-                <Button color='primary' variant='contained' sx={{ borderRadius : 0}} elevation={0}>
-                    Register
+                <Button 
+                  color='primary' 
+                  variant='contained' 
+                  sx={{ borderRadius : 0}} 
+                  elevation={0} 
+                  component={Link} 
+                  to='/register'
+                >
+                  Register
                 </Button>
-                
-            </Box>
+                </>
+                  
+              )} 
+
+             </Box> 
         </Toolbar>
         </AppBar>
         <Box component="nav">
