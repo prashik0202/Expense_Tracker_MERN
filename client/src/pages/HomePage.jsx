@@ -7,12 +7,12 @@ export default function HomePage() {
 
     return (
     <div className='home'>
-        <Box
-            sx={{
-               py : { md : 30 , xs : 20},
-               px : 5
-            }}
+        <Box    
             textAlign='center'
+            my={20}
+            width={500}
+            mx='auto'
+
         >
             <Box mt={1}>
                 <Typography variant={isNonMobile ? 'h1' : 'h3'}>

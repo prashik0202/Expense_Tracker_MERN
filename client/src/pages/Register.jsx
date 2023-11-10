@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import {
-    Box , Container , Button , TextField , FormControl , useMediaQuery, Typography, OutlinedInput, IconButton
+    Box , TextField , Button, FormControl , useMediaQuery, Typography, OutlinedInput, IconButton
 } from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Link } from 'react-router-dom';
-
-// importing Spinner:
-import Spinner from '../components/Spinner';
+import {  toast } from 'react-toastify';
+import validator from 'validator'
 
 export default function Register() {
 
@@ -23,27 +21,37 @@ export default function Register() {
         event.preventDefault();
     };
     
-    // form data state:
-    const  [ formData , setFormData ] = useState({
-        name : '',
-        email : '',
-        password : ''
-    })
+    const[name, setName] = useState('')
+    const[email, setEmail] = useState('')
+    const[password, setPassword] = useState('')
 
-    const { name , email ,password } = formData;
-
-    const onChange = (e) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.name] : e.target.value,
-        }))
+    const [ loading , setLoading ] = useState(false);
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(name.length > 10){
+            toast.error('Please enter short name')
+        }
+        else if(!validator.isEmail(email)){
+            toast.error('Please Enter valid email Id')
+        }
+        else if(password.length < 8){
+            toast.error('Enter strong password')
+        }
+        else {
+            toast.success('Submitted Successfully!')
+            const data = {
+                name,email,password
+            }
+            console.log(data);
+            setName('');
+            setEmail('');
+            setPassword('');
+            setLoading(true);
+        }
+        
     }
 
-    const [ Loading , setLoading ] = useState(false);
-
-    if(Loading){
-        return <Spinner/>
-    }
 
     return (
         <div>
@@ -69,19 +77,17 @@ export default function Register() {
                             variant='outlined' 
                             label='Name' 
                             margin='normal'
-                            // state part:
                             name='name'
                             value={name}
-                            onChange={onChange}
+                            onChange={(e) => setName(e.target.value)}
                         />
                         
                         <TextField 
                             variant='outlined' 
                             label="Email"
-                            // state part:
                             name = 'email'
                             value={email}
-                            onChange={onChange}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         
                         <OutlinedInput
@@ -104,11 +110,18 @@ export default function Register() {
                             sx={{ mt : 1}}
                             name='password'
                             value={password}
-                            onChange={onChange}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Button variant='contained' color='primary' sx={{ borderRadius : 0 , mt:2}} size='large'
-                            
-                        >Register</Button>
+                        <Button 
+                            variant='contained' 
+                            color='primary' 
+                            sx={{ borderRadius : 0 , mt:2}} 
+                            size='large'
+                            onClick={handleSubmit}
+                            disabled={loading}
+                        >
+                            {loading ? 'Loading...': 'Register' } 
+                        </Button>
                     </FormControl>
                     </form>
                 </Box>

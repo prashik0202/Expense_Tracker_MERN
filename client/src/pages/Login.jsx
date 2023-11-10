@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box ,  
     Button , 
@@ -10,9 +10,10 @@ import {
     IconButton
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
-import InputLabel from '@mui/material/InputLabel';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
+import {  toast } from 'react-toastify';
+import validator from 'validator'
 import { Link } from 'react-router-dom';
 
 export default function Login() {
@@ -20,12 +21,37 @@ export default function Login() {
     const isNonMobile = useMediaQuery('(min-width : 600px)');
 
     const [ showPassword , setShowPassword ] = React.useState(false);
+
+    const [ email , setEmail ] = useState('');
+    const [ password , setPassword ] = useState('');
+    const [ loading , setLoading ] = useState(false);
+
     const handleClickShowPassword = () => setShowPassword((show) => !show)
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(!validator.isEmail(email)){
+            toast.error('Please Enter valid email Id')
+        }
+        else if(password.length < 8){
+            toast.error('Enter strong password')
+        }
+        else {
+            toast.success('Submitted Successfully!')
+            const data = {
+                email,password
+            }
+            console.log(data);
+            setEmail('');
+            setPassword('');
+            setLoading(true);
+        }
+    }   
+    
     
     return (
         <div>
@@ -46,7 +72,13 @@ export default function Login() {
 
                 <Box p={2}>
                     <FormControl fullWidth>
-                        <TextField variant='outlined' label="Email" margin='normal'></TextField>
+                        <TextField 
+                            variant='outlined' 
+                            label="Email" 
+                            margin='normal' 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                         {/* <TextField variant='outlined' label="Password" margin='normal'></TextField> */}
                         <OutlinedInput
                             id="outlined-adornment-password"
@@ -65,14 +97,18 @@ export default function Login() {
                             }
                             placeholder='Password'
                             margin='normal'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <Button 
                             variant='contained' 
                             color='primary' 
                             sx={{ borderRadius : 0 , mt:2}} 
                             size='large'
+                            onClick={handleSubmit}
+                            disabled={loading}
                         >
-                            Login
+                            {loading ? 'Loading...' : 'Login' }
                         </Button>
                     </FormControl>
                 </Box>

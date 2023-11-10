@@ -1,7 +1,4 @@
-.home {
-    height: 100vh;
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #9aa5e6, #9cb0e9, #a0baec, #b3c8f0, #c6d5f4, #d9e3f7, #ecf1fb);
-}
+
 
 .back {
     background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #9aa5e6, #9cb0e9, #a0baec, #b3c8f0, #c6d5f4, #d9e3f7, #ecf1fb);
@@ -23,4 +20,12 @@
     width: 80px;
     height: 80px;
     /* background-color: red; */
+}
+
+.credit{
+    background-color:  #00e676;
+}
+
+.debit{
+    background-color:  #f44336;
 }
