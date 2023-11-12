@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "this is backend for exprense tracker",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server",
     "server": "nodemon server"
@@ -10,6 +11,7 @@
   "author": "prash",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.6.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

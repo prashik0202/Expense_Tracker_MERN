@@ -1,16 +1,10 @@
-import { useState } from 'react';
-
 import {
-  Grid , Box, Button, Typography, TextField,  FormControl , MenuItem, Select
+  Grid , Box, Button, Typography, FormControl
 } from '@mui/material';
 import TransactionsList from '../components/TransactionsList';
+import TransactionForm from '../components/TransactionForm';
 
 export default function Tracker() {
-
-  const [ description , setDescription ] = useState('');
-  const [ amount , setAmount ] = useState('');
-  const [ transactionType , setTransactionType ] = useState('')
-
 
   return (
     <Box mt={5}>
@@ -22,55 +16,17 @@ export default function Tracker() {
             my={2}
           >
             <Typography variant='h4'>Add Transactions</Typography>
+            <TransactionForm />
           </Box>
 
           <Box mx={5}>
-            <form>
-              <FormControl fullWidth>
-                <TextField 
-                  type='text'
-                  value={description}
-                  placeholder='Description'
-                  onChange={(e) => setDescription(e.target.value)}
-                  sx={{ my : 3}}
-                />
-
-                <TextField 
-                  type='number'
-                  value={amount}
-                  placeholder='Enter Amount'
-                  onChange={(e) => setAmount(e.target.value)}
-                  sx={{ my : 3}}
-                />
-
-                <Select
-                  type='text'
-                  value={transactionType}
-                  placeholder='Enter Transaction Type'
-                  sx={{ my : 3}}
-                  onChange={(e) => setTransactionType(e.target.value)}
-                >
-                  <MenuItem value='credit' >Credit</MenuItem>
-                  <MenuItem value='debit'>Debit</MenuItem>
-                </Select>
-
-                <Button
-                  variant='contained'
-                  type='submit'
-                  size='large'
-                  sx={{ borderRadius : 0 , my: 3}}
-                >
-                  Add Transaction
-                </Button>
-              </FormControl>
-            </form>
-
             <Box textAlign='center' my={4}>
               <Typography variant='body1'>
                 To get details history of transactions and analysis click the below button
               </Typography><br />
               <FormControl fullWidth>
                 <Button 
+                  type='submit'
                   variant='contained' 
                   sx={{ borderRadius : 0}}
                 >
@@ -80,7 +36,7 @@ export default function Tracker() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={4}>
           <TransactionsList />
         </Grid>
       </Grid>

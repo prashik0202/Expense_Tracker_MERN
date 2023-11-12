@@ -1,34 +1,32 @@
 {
-  "transactions" : [
+  "transactions": [
     {
-      "id" : 1,
-      "description" : "This is Description 1",
-      "amount" : 200,
-      "transactionType" : "credit"
+      "id": 46,
+      "description": "Gucci Bag",
+      "amount": "3000",
+      "transactionType": "debit",
+      "category": "personal"
     },
     {
-      "id" : 2,
-      "description" : "This is Description 2",
-      "amount" : 100,
-      "transactionType" : "debit"
+      "id": 9,
+      "description": "Trip",
+      "amount": "15000",
+      "transactionType": "debit",
+      "category": "transportation"
     },
     {
-      "id" : 3,
-      "description" : "This is Description 3",
-      "amount" : 400,
-      "transactionType" : "credit"
+      "id": 68,
+      "description": "Rent Recieved",
+      "amount": "20000",
+      "transactionType": "credit",
+      "category": ""
     },
     {
-      "id" : 4,
-      "description" : "This is Description 4",
-      "amount" : 100,
-      "transactionType" : "debit"
-    },
-    {
-      "id" : 5,
-      "description" : "This is Description 5",
-      "amount" : 20,
-      "transactionType" : "credit"
+      "id": 53,
+      "description": "Grocery",
+      "amount": "800",
+      "transactionType": "debit",
+      "category": "food"
     }
   ]
 }

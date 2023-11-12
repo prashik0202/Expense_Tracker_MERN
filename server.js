@@ -1,23 +1,37 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const colors = require('colors');
-const morgan = require('morgan');
-const connectDB = require('./config/db');
+import express from 'express';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import { notFound , errorHandler } from './middleware/errorMiddleware.js';
 dotenv.config();
 
+//importing the connect to DB function
+import connectDB from './config/db.js';
+
+//importing routes:
+import userRoutes from './routes/userRoutes.js';
+import transactionRoutes from './routes/transactionRoutes.js'
+
+const port = process.env.PORT || 5000;
+
+//connecting to DB:
 connectDB();
 
-const transactionRoutes = require('./routes/transactions');
-const userRoutes = require('./routes/user');
-
+//creating a express app:
 const app = express();
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}))
 
-app.use('/api/transaction',transactionRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/users',userRoutes);
+app.use('/api/transaction', transactionRoutes)
+app.use(notFound);
+app.use(errorHandler);
 
+app.get('/' , (req,res) => {
+  res.send('Api is running bro!');
+})
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, console.log(`Server is running on ${process.env.NODE_ENV} mode on port ${process.env.PORT}`.yellow.bold))
+app.listen(port, () => {
+  console.log(`server is running on the port : ${port}`);
+})

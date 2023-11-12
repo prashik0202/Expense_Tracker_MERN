@@ -1,6 +1,9 @@
 import { createTheme } from '@mui/material';
 
 export const theme = createTheme({
+    listItemText:{
+        fontSize:'2em',//Insert your required size
+    },
     palette: {
         mode: 'light',
         primary: {
