@@ -1,20 +1,6 @@
 {
   "transactions": [
     {
-      "id": 46,
-      "description": "Gucci Bag",
-      "amount": "3000",
-      "transactionType": "debit",
-      "category": "personal"
-    },
-    {
-      "id": 9,
-      "description": "Trip",
-      "amount": "15000",
-      "transactionType": "debit",
-      "category": "transportation"
-    },
-    {
       "id": 68,
       "description": "Rent Recieved",
       "amount": "20000",
@@ -22,11 +8,11 @@
       "category": ""
     },
     {
-      "id": 53,
-      "description": "Grocery",
-      "amount": "800",
+      "id": 28,
+      "description": "fdfdf",
+      "amount": "323",
       "transactionType": "debit",
-      "category": "food"
+      "category": "Health"
     }
   ]
 }

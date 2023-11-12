@@ -13,11 +13,11 @@ import { store } from './store';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
         <ThemeProvider theme={theme}> 
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </ThemeProvider>
-      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
 )

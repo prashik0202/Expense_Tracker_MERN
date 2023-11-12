@@ -1,135 +1,138 @@
-import React, { useState } from 'react';
-import {
-    Box , TextField , Button, FormControl , useMediaQuery, Typography, OutlinedInput, IconButton
+import React, { useState , useEffect} from 'react';
+import { 
+  Box,
+  Container,
+  Grid,
+  TextField, 
+  Button,
+  FormControl,
+  CssBaseline,
+  useMediaQuery,
+  Typography,
+  Link
 } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import { Link } from 'react-router-dom';
-import {  toast } from 'react-toastify';
-import validator from 'validator'
 
-export default function Register() {
+import  {useNavigate , useNavigation } from 'react-router-dom';
+import { useDispatch , useSelector } from "react-redux";
+import { useRegisterMutation } from "../slices/auth/userApiSlice";
+import { setCredentials } from "../slices/auth/authSlice";
+import { toast } from 'react-toastify';
+import CircularProgress from '@mui/material/CircularProgress';
 
-    // for mobile responsive design
-    const isNonMobile = useMediaQuery('(min-width : 600px)');
+function Register() {
 
-    // for showpassword and hide password functionality
-    const [ showPassword , setShowPassword ] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-    
-    const[name, setName] = useState('')
-    const[email, setEmail] = useState('')
-    const[password, setPassword] = useState('')
+  const isNonMobile = useMediaQuery('(min-width : 600px)');
 
-    const [ loading , setLoading ] = useState(false);
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(name.length > 10){
-            toast.error('Please enter short name')
-        }
-        else if(!validator.isEmail(email)){
-            toast.error('Please Enter valid email Id')
-        }
-        else if(password.length < 8){
-            toast.error('Enter strong password')
-        }
-        else {
-            toast.success('Submitted Successfully!')
-            const data = {
-                name,email,password
-            }
-            console.log(data);
-            setName('');
-            setEmail('');
-            setPassword('');
-            setLoading(true);
-        }
-        
+  const [name, setName ] = useState('');
+  const [email, setEmail ] = useState('');
+  const [password , setPassword ] = useState('');
+  const [confirmPassword , setConfirmPassword ] = useState('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [ register , { isLoading }] = useRegisterMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if(userInfo){
+      navigate('/tracker');
     }
+  }, [ userInfo , navigate])
 
+  const submitHandler = async(e) => {
+    e.preventDefault();
+    // console.log('submit');
+    if(password !== confirmPassword){
+      toast.error('Password does not match');
+      setPassword('');
+      setConfirmPassword('');
+    } else {
+      try{
+        const res = await register({name, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate('/tracker');
+      } catch(err){
 
-    return (
-        <div>
-            {/* <Typography variant='h2'>Register</Typography> */}
-            <Box 
-                marginTop={isNonMobile ? 25 : 20}
-                py={2}
-                px={1}
-                maxWidth={500}
-                mx={isNonMobile ? 'auto' : 1}
-                sx={{ borderRadius : 1}}
-                backgroundColor='rgba(238,238,238,0.4)'
-            >
-                <Box textAlign='center' p={1}>
-                    <Typography variant='h4'>Register</Typography>
-                </Box>
+      }
+    }
+  }
 
+  return (
+    
+    <Box mt={15} mb={4}  sx={{ mx : 'auto'}} width={isNonMobile ? '600px' : '300px'}>
+      <Box textAlign='center' my={1}>
+        <Typography variant='h4'>Sign Up</Typography>
+      </Box>
+      <Box >
+      <form onSubmit={submitHandler}>
+      <FormControl fullWidth>
+        <TextField 
+          type='text'
+          varianr='outlined'
+          placeholder='Name'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          margin='dense'
+          required
+        />
+        <TextField 
+          type='email'
+          varianr='outlined'
+          placeholder='Email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          margin='dense'
+          required
+        />
+        <TextField 
+          type='password'
+          varianr='outlined'
+          placeholder='Password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          margin='dense'
+          required
+        />
+        <TextField 
+          type='password'
+          varianr='outlined'
+          placeholder='Confirm Password'
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          margin='dense'
+        />
+        <Button
+          type='submit'
+          variant='contained'
+          size='large'
+          sx={{ my : 1}}
+        >
+          Sign up
+        </Button>
+      </FormControl>
+      </form>
 
-                <Box p={2}>
-                    <form >
-                    <FormControl fullWidth>
-                        <TextField 
-                            variant='outlined' 
-                            label='Name' 
-                            margin='normal'
-                            name='name'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        
-                        <TextField 
-                            variant='outlined' 
-                            label="Email"
-                            name = 'email'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                            // label="Password"
-                            placeholder='Password'
-                            sx={{ mt : 1}}
-                            name='password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button 
-                            variant='contained' 
-                            color='primary' 
-                            sx={{ borderRadius : 0 , mt:2}} 
-                            size='large'
-                            onClick={handleSubmit}
-                            disabled={loading}
-                        >
-                            {loading ? 'Loading...': 'Register' } 
-                        </Button>
-                    </FormControl>
-                    </form>
-                </Box>
+      {
+        isLoading && 
+        <CircularProgress 
+          sx={{
+            width: '100px',
+            height: '100px',
+            margin: 'auto',
+            display: 'block'
+          }} 
+        />
+      }
 
-                <Box mt={1} textAlign='center'>
-                    <Typography variant='body1'>Already have account? <Link to='/login'>SignIn</Link></Typography>
-                </Box>
-            </Box>
-        </div>
-    )
+      <Box sx={{ display : 'flex' , justifyContent : 'center'}} mt={2}>
+        <Typography sx={{ mr : 1}}>Already have account?</Typography>
+        <Link href='/login'>Login</Link>
+      </Box>
+      </Box>
+    </Box>
+      
+  )
 }
+
+export default Register

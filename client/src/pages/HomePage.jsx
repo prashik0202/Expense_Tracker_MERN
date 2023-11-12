@@ -1,9 +1,23 @@
-import React from 'react'
+import React , { useEffect }from 'react'
 import { Box , Button , Typography , useMediaQuery } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function HomePage() {
 
     const isNonMobile = useMediaQuery('(min-width : 600px)');
+
+    const { userInfo } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if(userInfo){
+            navigate('/tracker');
+        }else {
+            navigate('/login')
+        }
+    }
+
 
     return (
     <div className='home'>
@@ -27,7 +41,15 @@ export default function HomePage() {
             </Box>
 
             <Box mt={2}>
-                <Button variant='contained' color='primary' size='large' sx={{ borderRadius : 0}}>Get Started</Button>
+                <Button 
+                    variant='contained' 
+                    color='primary' 
+                    size='large' 
+                    sx={{ borderRadius : 0}}
+                    onClick={handleClick}
+                >
+                    Get Started
+                </Button>
             </Box>
         </Box>
     </div>
