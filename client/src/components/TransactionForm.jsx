@@ -3,8 +3,9 @@ import axios from 'axios';
 import {
   Button, TextField,  FormControl , MenuItem, Select, InputLabel
 } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 import { addTransaction } from '../slices/transactions/transactionSlice';
+import { useAddTransactionMutation } from '../slices/transactions/transactionApiSlice';
 
 export default function TransactionForm() {
 
@@ -12,17 +13,25 @@ export default function TransactionForm() {
 
   const [ description , setDescription ] = useState('');
   const [ amount , setAmount ] = useState('');
-  const [ transactionType , setTransactionType ] = useState('debit')
+  const [ expenseType , setExpenseType ] = useState('debit')
   const [ category , setCategory ] = useState('housing');
 
+  const { userInfo } = useSelector((state) => state.auth);
+  const [ add , {isLoading}] = useAddTransactionMutation()
   
   const handleSubmit = async(e) => {
 
     e.preventDefault();
-    const data = { id : Math.floor(Math.random() * 100) + 1 , description , amount , transactionType , category }
     try{
-      await axios.post('http://localhost:3003/transactions', data);
-      dispatch(addTransaction(data));
+      const res = await add({
+        _id : userInfo._id,
+        description,
+        amount,
+        expenseType,
+        category
+      }).unwrap();
+      console.log(res)
+      dispatch(addTransaction(res));
       setDescription('');
       setAmount('');
       setCategory('');
@@ -55,10 +64,10 @@ export default function TransactionForm() {
         <FormControl fullWidth>
           <Select
             type='text'
-            value={transactionType}
+            value={expenseType}
             placeholder='Enter Transaction Type'
             sx={{ my : 3}}
-            onChange={(e) => setTransactionType(e.target.value)}
+            onChange={(e) => setExpenseType(e.target.value)}
           >
             <MenuItem value='credit' >Credit</MenuItem>
             <MenuItem value='debit'>Debit</MenuItem>
@@ -72,14 +81,17 @@ export default function TransactionForm() {
             placeholder='Enter Category'
             sx={{ my : 3}}
             onChange={(e) => setCategory(e.target.value)}
-            disabled={transactionType === 'credit'}
+            // disabled={expenseType === 'credit'}
           >
             <MenuItem value='housing' >Housing</MenuItem>
             <MenuItem value='transportation'>Transportation</MenuItem>
             <MenuItem value='food'>Food</MenuItem>
             <MenuItem value='Health'>Health</MenuItem>
             <MenuItem value='entertainment'>Entertainment</MenuItem>
-            <MenuItem value='personal'>Personal</MenuItem>
+            <MenuItem value='personal'>Rent</MenuItem>
+            <MenuItem value='personal'>Salary</MenuItem>
+            <MenuItem value='personal'>Payment</MenuItem>
+            <MenuItem value='personal'>Return</MenuItem>
           </Select>
         </FormControl>
 

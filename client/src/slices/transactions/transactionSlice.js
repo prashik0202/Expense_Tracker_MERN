@@ -8,6 +8,7 @@ const transactionSlice = createSlice({
   name : 'transaction',
   initialState,
   reducers : {
+    reset : (state) => initialState,
     addTransaction : (state , action) => {
       state.transaction = [...state.transaction , action.payload]
     },
@@ -15,7 +16,7 @@ const transactionSlice = createSlice({
       state.transaction = action.payload;
     },
     removeTransaction : (state,action) => {
-      state.transaction = state.transaction.filter((item) => item.id !== action.payload);
+      state.transaction = state.transaction.filter((item) => item._id !== action.payload);
     }
   }
 });
@@ -23,7 +24,8 @@ const transactionSlice = createSlice({
 export const {
   addTransaction,
   setTransaction,
-  removeTransaction
+  removeTransaction,
+  reset
 } = transactionSlice.actions;
 
 export default transactionSlice.reducer;
