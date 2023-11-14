@@ -101,7 +101,7 @@ function Header(props) {
             variant="h6"
             component={Link}
             to='/'
-            sx={{ flexGrow: 1, display: { sm: 'block' } , textDecoration : 'none', color : 'black' }}
+            sx={{ flexGrow: 1, display: { sm: 'block' } , textDecoration : 'none', color : 'white' }}
           >
             Money Track
           </Typography>

@@ -87,11 +87,12 @@ export default function TransactionForm() {
             <MenuItem value='transportation'>Transportation</MenuItem>
             <MenuItem value='food'>Food</MenuItem>
             <MenuItem value='Health'>Health</MenuItem>
+            <MenuItem value='personal'>Personal</MenuItem>
             <MenuItem value='entertainment'>Entertainment</MenuItem>
-            <MenuItem value='personal'>Rent</MenuItem>
-            <MenuItem value='personal'>Salary</MenuItem>
-            <MenuItem value='personal'>Payment</MenuItem>
-            <MenuItem value='personal'>Return</MenuItem>
+            <MenuItem value='rent'>Rent</MenuItem>
+            <MenuItem value='salary'>Salary</MenuItem>
+            <MenuItem value='payment'>Payment</MenuItem>
+            <MenuItem value='return'>Return</MenuItem>
           </Select>
         </FormControl>
 

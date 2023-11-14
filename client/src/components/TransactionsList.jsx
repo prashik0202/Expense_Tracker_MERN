@@ -25,7 +25,6 @@ export default function TransactionsList( ) {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        
         const res = await get({_id : userInfo._id})
         console.log(res)
         // setTransactions(response.data);
@@ -85,7 +84,7 @@ export default function TransactionsList( ) {
     <Box my={5} mx={4}> 
       <Box>
         <Typography variant='h4'>Transactions</Typography><br />
-        <Typography variant='body1' color='text'>{Date.now()}</Typography>
+        <Typography variant='body1' color='text'>Date : {formatDate()}</Typography>
       </Box>
 
       <Box sx={{ display : 'flex' , justifyContent : 'space-around' , mt : 2}}>
@@ -93,19 +92,19 @@ export default function TransactionsList( ) {
           <Grid item xs={12} sm={12} md={4} >
             <Box width='33%'   p={3} >
               <Typography>Credit</Typography>
-              <Typography variant='h4' sx={{ color : '#43a047'}}>${totalCredit}</Typography>
+              <Typography variant='h4' sx={{ color : '#43a047'}}>&#8377;{totalCredit}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={4} >
             <Box width='33%'   p={3} >
               <Typography>Debit</Typography>
-              <Typography variant='h4'sx={{ color : '#e53935'}}>${totalDebit}</Typography>
+              <Typography variant='h4'sx={{ color : '#e53935'}}>&#8377;{totalDebit}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={4} >
             <Box width='33%'   p={3} >
               <Typography>Balance</Typography>
-              <Typography variant='h4'sx={{ color : '#3949ab'}}>${balance}</Typography>
+              <Typography variant='h4'sx={{ color : '#3949ab'}}>&#8377;{balance}</Typography>
             </Box>
           </Grid>
         </Grid> 
@@ -116,18 +115,18 @@ export default function TransactionsList( ) {
           if(item.createdAt === formatDate()){
             return(
               <ListItem
-                sx={{ my : 1 }}
+                sx={{ my : 1}}
                 className={`${item.expenseType}`}
                 secondaryAction={
                   <IconButton edge='end' onClick={() => handleDelete(item._id)}>
-                    <DeleteIcon />
+                    <DeleteIcon sx={{ color : 'white'}}/>
                   </IconButton>
                 }
                 key={item.id}
               >
                 <ListItemText>
                   <Typography variant='h6' >{item.description}</Typography>
-                  <Typography variant='h5' sx={{ fontWeight : 'bold'}} >${item.amount}</Typography>
+                  <Typography variant='h5' sx={{ fontWeight : 'bold'}} >&#8377;{item.amount}</Typography>
                 </ListItemText>
                 
               </ListItem>

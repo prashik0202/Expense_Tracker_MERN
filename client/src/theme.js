@@ -5,19 +5,19 @@ export const theme = createTheme({
         fontSize:'2em',//Insert your required size
     },
     palette: {
-        mode: 'light',
+        mode: 'dark',
         primary: {
-            main: '#161616',
+            main: '#eeeeee',
         },
         secondary: {
-            main: '#3fd4d7',
+            main: '#03a9f4',
         },
         divider: 'rgba(228,222,222,0.12)',
         background: {
-            default: '#eaeaea',
+            default: '#212121',
         },
         text: {
-            primary: 'rgba(43,43,43,0.87)',
+            primary: '#fafafa',
         },
     },
     typography : {
