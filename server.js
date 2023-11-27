@@ -24,8 +24,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}))
 app.use(cors({
-  credentials : true,
-  origin : 'http://expense-tracker-mern-theta.vercel.app'
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
 }));
 
 app.use('/api/users',userRoutes);
