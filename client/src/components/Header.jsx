@@ -115,10 +115,10 @@ function Header(props) {
                 
               ) : (
                 <>
-                  <Button   sx={{ mx : 0.5 , color : 'black'}}  component={Link} to='/login'>
+                  <Button   sx={{ mx : 0.5 , color : 'white'}}  component={Link} to='/login'>
                     Login
                   </Button>
-                  <Button   sx={{ mx : 0.5 , color : 'white'}} variant='contained' component={Link} to='/register'>
+                  <Button   sx={{ mx : 0.5 , color : 'black'}} variant='contained' component={Link} to='/register'>
                     Regiser
                   </Button>
                 </>

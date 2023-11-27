@@ -1,5 +1,4 @@
 import { useState  } from 'react';
-import axios from 'axios';
 import {
   Button, TextField,  FormControl , MenuItem, Select, InputLabel
 } from '@mui/material';
@@ -14,7 +13,7 @@ export default function TransactionForm() {
   const [ description , setDescription ] = useState('');
   const [ amount , setAmount ] = useState('');
   const [ expenseType , setExpenseType ] = useState('debit')
-  const [ category , setCategory ] = useState('housing');
+  const [ category , setCategory ] = useState('');
 
   const { userInfo } = useSelector((state) => state.auth);
   const [ add , {isLoading}] = useAddTransactionMutation()
@@ -81,18 +80,19 @@ export default function TransactionForm() {
             placeholder='Enter Category'
             sx={{ my : 3}}
             onChange={(e) => setCategory(e.target.value)}
-            // disabled={expenseType === 'credit'}
           >
-            <MenuItem value='housing' >Housing</MenuItem>
-            <MenuItem value='transportation'>Transportation</MenuItem>
-            <MenuItem value='food'>Food</MenuItem>
-            <MenuItem value='Health'>Health</MenuItem>
-            <MenuItem value='personal'>Personal</MenuItem>
-            <MenuItem value='entertainment'>Entertainment</MenuItem>
-            <MenuItem value='rent'>Rent</MenuItem>
-            <MenuItem value='salary'>Salary</MenuItem>
-            <MenuItem value='payment'>Payment</MenuItem>
-            <MenuItem value='return'>Return</MenuItem>
+            
+            <MenuItem value='housing' disabled={expenseType === 'credit'}>Housing</MenuItem>
+            <MenuItem value='transportation' disabled={expenseType === 'credit'}>Transportation</MenuItem>
+            <MenuItem value='food' disabled={expenseType === 'credit'}>Food</MenuItem>
+            <MenuItem value='Health' disabled={expenseType === 'credit'}>Health</MenuItem>
+            <MenuItem value='personal' disabled={expenseType === 'credit'}>Personal</MenuItem>
+            <MenuItem value='entertainment' disabled={expenseType === 'credit'}>Entertainment</MenuItem>
+
+            <MenuItem value='salary' disabled={expenseType === 'debit'}>Salary</MenuItem>
+            <MenuItem value='payment' disabled={expenseType === 'debit'}>Payment</MenuItem>
+            <MenuItem value='return' disabled={expenseType === 'debit'}>Return</MenuItem>
+            
           </Select>
         </FormControl>
 

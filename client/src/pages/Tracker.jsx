@@ -11,9 +11,9 @@ export default function Tracker() {
 
 
   return (
-    <Box mt={5} mx={isNonMobile ? 40 : 1}>
+    <Box mt={6} mx={isNonMobile ? 10 : 1}>
       <Grid container>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={4}>
           <Box
             px={5}
             py={2}
@@ -40,7 +40,7 @@ export default function Tracker() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid item xs={12} sm={6} md={8}>
           <TransactionsList />
         </Grid>
       </Grid>

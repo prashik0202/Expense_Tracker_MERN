@@ -8,7 +8,8 @@ export default defineConfig({
     port : 3001,
     proxy : {
       '/api' : {
-        target : 'http://localhost:5005',
+        // target : 'http://localhost:5005',
+        target : 'http://expense-tracker-mern-theta.vercel.app',
         changeOrigin : true
       }
     }
